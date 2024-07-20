@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sports_app/data/models/PlayersData.dart';
+import 'package:sports_app/data/models/TopScorersData.dart';
 import 'package:sports_app/data/reposetories/TopScorersRepo.dart';
 import 'package:sports_app/utils/colors.dart';
 
@@ -62,7 +62,7 @@ class _TopScorersScreenState extends State<TopScorersScreen> {
                   leading: CircleAvatar(
                     backgroundColor: thirdColor,
                     child: Text(
-                      scorer.playerPlace.toString(),
+                      (index + 1).toString(),
                       style: TextStyle(color: secondaryColor),
                     ),
                   ),

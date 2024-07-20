@@ -41,6 +41,8 @@ class Result {
     coaches = List.from(json['coaches']).map((e) => Coaches.fromJson(e)).toList();
   }
 
+  get playerNumber => null;
+
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['team_key'] = teamKey;

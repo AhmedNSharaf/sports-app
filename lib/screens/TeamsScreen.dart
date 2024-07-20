@@ -1,8 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:sports_app/data/models/TeamsData.dart';
 import 'package:sports_app/data/reposetories/TeamsRepo.dart';
+import 'package:sports_app/screens/PlayersScreen.dart';
 import 'package:sports_app/utils/colors.dart';
 
 class TeamsScreen extends StatefulWidget {
@@ -50,20 +49,6 @@ class _TeamsScreenState extends State<TeamsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: primaryColor,
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back, color: secondaryColor),
-      //     onPressed: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //   ),
-      //   backgroundColor: primaryColor,
-      //   centerTitle: true,
-      //   title: const Text(
-      //     'Teams',
-      //     style: TextStyle(color: secondaryColor, fontWeight: FontWeight.bold),
-      //   ),
-      // ),
       body: Column(
         children: [
           Padding(
@@ -109,37 +94,48 @@ class _TeamsScreenState extends State<TeamsScreen> {
                     itemCount: filteredTeams.length,
                     itemBuilder: (context, index) {
                       var team = filteredTeams[index];
-                      return Card(
-                        color: thirdColor,
-                        elevation: 5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (team.teamLogo != null &&
-                                team.teamLogo!.isNotEmpty)
-                              Image.network(
-                                team.teamLogo!,
-                                height: 50,
-                                width: 50,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(Icons.error,
-                                      color: secondaryColor);
-                                },
-                              )
-                            else
-                              const Icon(Icons.sports_soccer,
-                                  color: secondaryColor, size: 50),
-                            const SizedBox(height: 10),
-                            Text(
-                              team.teamName ?? 'No Name',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: secondaryColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PlayersScreen(teamId: team.teamKey),
                             ),
-                          ],
+                          );
+                        },
+                        child: Card(
+                          color: thirdColor,
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (team.teamLogo != null &&
+                                  team.teamLogo!.isNotEmpty)
+                                Image.network(
+                                  team.teamLogo!,
+                                  height: 50,
+                                  width: 50,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Icon(Icons.error,
+                                        color: secondaryColor);
+                                  },
+                                )
+                              else
+                                const Icon(Icons.sports_soccer,
+                                    color: secondaryColor, size: 50),
+                              const SizedBox(height: 10),
+                              Text(
+                                team.teamName ?? 'No Name',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: secondaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

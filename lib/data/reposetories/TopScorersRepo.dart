@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:sports_app/data/models/PlayersData.dart';
+import 'package:sports_app/data/models/TopScorersData.dart';
 
 class TopScorersRepo {
   Future<TopScorersData> fetchTopScorersData(int leagueId) async {
