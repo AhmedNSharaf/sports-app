@@ -1,8 +1,11 @@
+// leagues_screen.dart
+
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:sports_app/data/models/LeagueData.dart';
 import 'package:sports_app/data/reposetories/LeagusRepo.dart';
+import 'package:sports_app/screens/TeamsScreen.dart';
 import 'package:sports_app/utils/colors.dart';
 
 class LeaguesScreen extends StatefulWidget {
@@ -62,34 +65,47 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
               itemCount: snapshot.data!.result.length,
               itemBuilder: (context, index) {
                 var league = snapshot.data!.result[index];
-                return Card(
-                  color: thirdColor,
-                  elevation: 5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (league.leagueLogo != null && league.leagueLogo!.isNotEmpty)
-                        Image.network(
-                          league.leagueLogo!,
-                          height: 50,
-                          width: 50,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.error, color: secondaryColor);
-                          },
-                        )
-                      else
-                        const Icon(Icons.sports_soccer, color: secondaryColor, size: 50),
-                      const SizedBox(height: 10),
-                      Text(
-                        league.leagueName,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: secondaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            TeamsScreen(leagueId: league.leagueKey),
                       ),
-                    ],
+                    );
+                  },
+                  child: Card(
+                    color: thirdColor,
+                    elevation: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (league.leagueLogo != null &&
+                            league.leagueLogo!.isNotEmpty)
+                          Image.network(
+                            league.leagueLogo!,
+                            height: 50,
+                            width: 50,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.error,
+                                  color: secondaryColor);
+                            },
+                          )
+                        else
+                          const Icon(Icons.sports_soccer,
+                              color: secondaryColor, size: 50),
+                        const SizedBox(height: 10),
+                        Text(
+                          league.leagueName,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              color: secondaryColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
