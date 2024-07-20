@@ -64,7 +64,8 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LeaguesScreen(countryKey: country.countryKey),
+                        builder: (context) =>
+                            LeaguesScreen(countryKey: country.countryKey),
                       ),
                     );
                   },
@@ -74,27 +75,42 @@ class _CountriesScreenState extends State<CountriesScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if (country.countryLogo != null && country.countryLogo!.isNotEmpty)
+                        if (country.countryLogo != null &&
+                            country.countryLogo!.isNotEmpty &&
+                            country.countryName != 'Israel')
                           Image.network(
                             country.countryLogo!,
                             height: 50,
                             width: 50,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.error, color: secondaryColor);
+                              return const Icon(Icons.error,
+                                  color: secondaryColor);
                             },
                           )
                         else
-                          const Icon(Icons.flag, color: secondaryColor, size: 50),
+                          const Icon(Icons.flag,
+                              color: secondaryColor, size: 50),
                         const SizedBox(height: 10),
-                        Text(
-                          country.countryName,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: secondaryColor,
-                            fontWeight: FontWeight.bold,
+                        if (country.countryName == 'Israel')
+                          Text(
+                            'Free\nPalestine',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        else
+                          Text(
+                            country.countryName,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: secondaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
