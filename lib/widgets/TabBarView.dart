@@ -33,9 +33,15 @@ class _TeamsTabState extends State<TeamsTab> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return const Center(child: Text('Failed to load teams data'));
-        } else if (!snapshot.hasData || snapshot.data!.result.isEmpty) {
+        }
+        else if (snapshot.hasError) {
+          return const Center(
+              child: Text(
+            'Failed to load teams data',
+            style: TextStyle(color: secondaryColor),
+          ));
+        }
+        else if (!snapshot.hasData || snapshot.data!.result.isEmpty) {
           return const Center(child: Text('No teams available'));
         } else {
           return ListView.builder(

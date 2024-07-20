@@ -1,11 +1,8 @@
-// leagues_screen.dart
-
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 import 'package:sports_app/data/models/LeagueData.dart';
 import 'package:sports_app/data/reposetories/LeagusRepo.dart';
 import 'package:sports_app/screens/TeamsScreen.dart';
+import 'package:sports_app/screens/TopScorersScreen.dart';
 import 'package:sports_app/utils/colors.dart';
 
 class LeaguesScreen extends StatefulWidget {
@@ -24,6 +21,53 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
   void initState() {
     super.initState();
     futureLeaguesData = LeaguesRepo().fetchLeaguesData(widget.countryKey);
+  }
+
+  void _onLeagueSelected(int leagueId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: secondaryColor),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              backgroundColor: primaryColor,
+              centerTitle: true,
+              title: const Text(
+                'League Details',
+                style: TextStyle(color: secondaryColor),
+              ),
+              bottom: const TabBar(
+                labelStyle:
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                labelColor: Colors
+                    .white, // Change this to your desired color for selected tab text
+                //unselectedLabelColor: Colors
+                //    .grey, // Change this to your desired color for unselected tab text
+                unselectedLabelStyle:
+                    TextStyle(fontSize: 15, color: Colors.grey),
+                tabs: [
+                  Tab(text: 'Teams'),
+                  Tab(text: 'Top Scorers'),
+                ],
+              ),
+            ),
+            body: TabBarView(
+              children: [
+                TeamsScreen(leagueId: leagueId),
+                TopScorersScreen(leagueId: leagueId),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -65,19 +109,11 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
               itemCount: snapshot.data!.result.length,
               itemBuilder: (context, index) {
                 var league = snapshot.data!.result[index];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            TeamsScreen(leagueId: league.leagueKey),
-                      ),
-                    );
-                  },
-                  child: Card(
-                    color: thirdColor,
-                    elevation: 5,
+                return Card(
+                  color: thirdColor,
+                  elevation: 5,
+                  child: InkWell(
+                    onTap: () => _onLeagueSelected(league.leagueKey),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -100,9 +136,10 @@ class _LeaguesScreenState extends State<LeaguesScreen> {
                           league.leagueName,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontSize: 16,
-                              color: secondaryColor,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

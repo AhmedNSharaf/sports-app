@@ -35,12 +35,10 @@ class Result {
 
   Result.fromJson(Map<String, dynamic> json) {
     teamKey = json['team_key'];
-    teamName = null;
-    teamLogo = null;
-    players =
-        List.from(json['players']).map((e) => Players.fromJson(e)).toList();
-    coaches =
-        List.from(json['coaches']).map((e) => Coaches.fromJson(e)).toList();
+    teamName = json['team_name'] ;
+    teamLogo = json['team_logo'] ;
+    players = List.from(json['players']).map((e) => Players.fromJson(e)).toList();
+    coaches = List.from(json['coaches']).map((e) => Coaches.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -100,9 +98,9 @@ class Players {
   });
   late final int playerKey;
   late final String? playerImage;
-  late final String playerName;
-  late final String playerNumber;
-  late final String playerCountry;
+  late final String? playerName;
+  late final String? playerNumber;
+  late final Null playerCountry;
   late final String playerType;
   late final String playerAge;
   late final String playerMatchPlayed;
@@ -142,7 +140,7 @@ class Players {
 
   Players.fromJson(Map<String, dynamic> json) {
     playerKey = json['player_key'];
-    playerImage = json['player_image'];
+    playerImage = json['player_image'] ;
     playerName = json['player_name'];
     playerNumber = json['player_number'];
     playerCountry = json['player_country'];
@@ -156,7 +154,7 @@ class Players {
     playerSubstituteOut = json['player_substitute_out'];
     playerSubstitutesOnBench = json['player_substitutes_on_bench'];
     playerAssists = json['player_assists'];
-    playerBirthdate = json['player_image'];
+    playerBirthdate = json['player_birthdate'];
     playerIsCaptain = json['player_is_captain'];
     playerShotsTotal = json['player_shots_total'];
     playerGoalsConceded = json['player_goals_conceded'];
@@ -243,8 +241,8 @@ class Coaches {
 
   Coaches.fromJson(Map<String, dynamic> json) {
     coachName = json['coach_name'];
-    coachCountry = null;
-    coachAge = null;
+    coachCountry = json['coach_country'] ;
+    coachAge = json['coach_age'] ;
   }
 
   Map<String, dynamic> toJson() {

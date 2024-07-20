@@ -7,8 +7,7 @@ class TeamsRepo {
   Future<TeamsData> fetchTeamsData(int leagueId) async {
     try {
       final response = await dio.get(
-        'https://apiv2.allsportsapi.com/football/?met=Teams&leagueId=$leagueId&APIkey=4dbd8cf7eeee81d13356a42a98b66173295d491fdeaa4434e4a93d64b13a447b'
-      );
+          'https://apiv2.allsportsapi.com/football/?met=Teams&leagueId=$leagueId&APIkey=4dbd8cf7eeee81d13356a42a98b66173295d491fdeaa4434e4a93d64b13a447b');
       if (response.statusCode == 200) {
         return TeamsData.fromJson(response.data);
       } else {
