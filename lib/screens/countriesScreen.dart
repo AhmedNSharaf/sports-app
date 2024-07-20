@@ -61,13 +61,52 @@ class _CountriesScreenState extends State<CountriesScreen> {
                 var country = snapshot.data!.result[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            LeaguesScreen(countryKey: country.countryKey),
-                      ),
-                    );
+                    if (country.countryName != 'Israel')
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              LeaguesScreen(countryKey: country.countryKey),
+                        ),
+                      );
+                    else
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor:
+                              thirdColor, // Set the background color here
+                          title: Text(
+                            'Coming Soon',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor),
+                          ),
+                          content: Text(
+                            'Palestine leagues are coming soon.',
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: secondaryColor, // Set the text color
+                                fontWeight: FontWeight.bold),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        primaryColor // Set the button text color
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
                   },
                   child: Card(
                     color: thirdColor,
